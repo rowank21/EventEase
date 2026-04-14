@@ -1,32 +1,26 @@
-name: Build and Test EventEase
+name: Build EventEase
 
 on:
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
     - uses: actions/checkout@v4
-
+    
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
-
+    
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ./  # Your .csproj is in the root folder
-
-    - name: Build the application
+    
+    - name: Build
       run: dotnet build --no-restore --configuration Release
-      working-directory: ./
-
-    #: Add a step to run tests if you have any .csproj test files
-    # - name: Run tests
-    #   run: dotnet test --no-build --verbosity normal
-    #   working-directory: ./
