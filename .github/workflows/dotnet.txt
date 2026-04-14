@@ -1,60 +1,29 @@
-﻿name: EventEase CI/CD Pipeline
+﻿name: Build EventEase
 
-# This workflow triggers on pushes and pull requests to the main branch
 on:
   push:
     branches: [ "main", "master" ]
   pull_request:
     branches: [ "main", "master" ]
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Environment variables available to all jobs
-env:
-  DOTNET_VERSION: '8.0.x'
-
 jobs:
-  # JOB 1: Build and Test
-  build-and-test:
-    name: Build and Test Application
+  build:
     runs-on: ubuntu-latest
     
     steps:
-    # Step 1: Check out the code from GitHub
-    - name: Checkout code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
     
-    # Step 2: Setup .NET SDK
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
+        dotnet-version: 8.0.x
     
-    # Step 3: Restore NuGet packages
     - name: Restore dependencies
       run: dotnet restore
-      working-directory: ./
     
-    # Step 4: Build the application
-    - name: Build application
+    - name: Build
       run: dotnet build --no-restore --configuration Release
-      working-directory: ./
     
-    # Step 5: Run tests (if you have any)
-    - name: Run tests
-      run: dotnet test --no-build --verbosity normal
-      working-directory: ./
-      continue-on-error: true  # Don't fail the workflow if no tests exist yet
-    
-    # Step 6: Publish the application
-    - name: Publish application
+    - name: Publish
       run: dotnet publish --configuration Release --output ./publish
-      working-directory: ./
-    
-    # Step 7: Upload build artifacts (optional - for deployment later)
-    - name: Upload build artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: eventease-build
-        path: ./publish
-        retention-days: 7
