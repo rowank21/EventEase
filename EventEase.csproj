@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include=".github\workflows\dotnet.txt" />
+    <Content Include=".github\workflows\main.yml" />
   </ItemGroup>
 
   <ItemGroup>
