@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EventEase.Models
 {
+    // location where events can be hosted
     public class Venue
     {
         [Key]

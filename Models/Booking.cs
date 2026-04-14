@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EventEase.Models
 {
+    // Represents a reservation linking a specific venue with a specific event
     public class Booking
     {
         [Key]
@@ -33,6 +34,7 @@ namespace EventEase.Models
         [CustomValidation(typeof(Booking), "ValidateEndDateTime")]
         public DateTime EndDateTime { get; set; }
 
+        // Current state of the booking (Confirmed, Cancelled, Completed)
         [Display(Name = "Status")]
         [StringLength(20, ErrorMessage = "Status cannot exceed 20 characters")]
         public string BookingStatus { get; set; } = "Confirmed";
